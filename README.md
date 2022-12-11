@@ -1,5 +1,5 @@
 # Linode Terraform Infrastructure
-[![version](https://img.shields.io/badge/version-0.0.1-blue)](https://github.com/DevOps-With-Brian/linode-infra/blob/main/CHANGELOG.md)
+[![version](https://img.shields.io/badge/version-0.1.0-blue)](https://github.com/DevOps-With-Brian/linode-infra/blob/main/CHANGELOG.md)
 [![Documentation Status](https://readthedocs.org/projects/linode-infra/badge/?version=latest)](https://linode-infra.readthedocs.io/en/latest/?badge=latest)
 
 
