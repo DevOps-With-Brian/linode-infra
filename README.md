@@ -3,7 +3,7 @@
 [![Documentation Status](https://readthedocs.org/projects/linode-infra/badge/?version=latest)](https://linode-infra.readthedocs.io/en/latest/?badge=latest)
 
 
-This is my production terraform code for [DevOps With Brian](www.devopswithbrian.com) where I have a blog and a few other things used in [Youtube Videos](https://www.youtube.com/@devopswithbrian)
+This is my production terraform code for www.devopswithbrian.com where I have a blog and a few other things used in [Youtube Videos](https://www.youtube.com/@devopswithbrian)
 
 For the full documentation and how to use this please go [Here](https://linode-infra.readthedocs.io/en/latest/?badge=latest)
 
