@@ -1,0 +1,58 @@
+on:
+  push:
+    branches:
+      - 'main'
+      
+jobs:
+  bump_version:
+    if: "!startsWith(github.event.head_commit.message, 'bump:')"
+    runs-on: ubuntu-latest
+    name: "Bump version and create changelog with commitizen"
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: "${{ secrets.COMMITIZEN_TOKEN  }}"
+      
+      - id: cz
+        name: Create bump and changelog
+        uses: commitizen-tools/commitizen-action@master
+        with:
+          github_token: ${{ secrets.COMMITIZEN_TOKEN  }}
+      
+      - name: Print Version
+        run: echo "Bumped to version ${{ steps.cz.outputs.version }}"
+      
+      - name: Update README.md Version
+        run: sed -i 's/[0-9].[0-9].[0-9]/${{ steps.cz.outputs.version }}/g' README.md
+      
+      - name: Commit Readme
+        continue-on-error: true
+        run: |
+          if [ -f ".git/COMMIT_EDITMSG" ] ; then
+              rm .git/COMMIT_EDITMSG
+          fi
+          git add README.md
+          git commit -m "docs(README.md): updating badge version in readme"
+          git push origin main
+      
+      - name: Update Docs Changelog
+        continue-on-error: true
+        run: |
+          sudo apt-get install -y pandoc
+          pandoc --from=markdown --to=rst --output=docs/changelog.rst CHANGELOG.md
+          sed -i '1i **********' docs/changelog.rst
+          sed -i '2i Changelog' docs/changelog.rst
+          sed -i '3i **********' docs/changelog.rst
+
+      - name: Commit Changelog Update
+        continue-on-error: true
+        run: |
+          if [ -f ".git/COMMIT_EDITMSG" ] ; then
+              rm .git/COMMIT_EDITMSG
+          fi
+          git add docs/changelog.rst
+          git commit -m "docs(changelog.rst): updating automated changelog for docs"
+          git push origin main
+
